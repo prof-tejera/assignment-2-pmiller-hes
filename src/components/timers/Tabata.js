@@ -1,11 +1,12 @@
 import Panel from "../generic/Panel/Panel";
 import Timer from "../generic/Timer";
 import Input from "../generic/Input/Input";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TabataTimerDisplay from "../generic/screen/TabataTimerDisplay";
 import TimerButtons from "../generic/TimerButtons";
+import TimeInput from "../generic/TimeInput";
 
-const Tabata = () => {
+const Tabata = ({ editMode = true, initialState, onUpdate }) => {
     const [duration, setDuration] = useState(0);
     const [iterations, setIterations] = useState(0);
     const [state, setState] = useState('on');
@@ -13,6 +14,28 @@ const Tabata = () => {
     const onOffState = useRef('on');
     const onSeconds = useRef(0);
     const offSeconds = useRef(0);
+    const [timerEnabled, setTimerEnabled] = useState(false);
+
+    useEffect(() => {
+        if (initialState) {
+            setDuration(initialState.duration || 0);
+            setIterations(initialState.iterations || 0);
+            setState(initialState.state || 'on');
+            iterationState.current = initialState.iterationState || 0;
+            onOffState.current = initialState.onOffState || 'on';
+            onSeconds.current = initialState.onSeconds || 0;
+            offSeconds.current = initialState.offSeconds || 0;
+            setTimerEnabled(initialState.timerEnabled !== undefined ? initialState.timerEnabled : false);
+        }
+    }, [initialState]);
+    
+
+    useEffect(() => {
+        if (onUpdate) {
+            onUpdate({ duration, iterations, state });
+        }
+    }, [duration, iterations, state, onUpdate]);
+
 
     const OnTimerElapse = () => {       
         if (onOffState.current === 'on') {
@@ -49,6 +72,7 @@ const Tabata = () => {
         iterationState.current = updatedIteration;
         setIterations(updatedIteration);
         setState("on");
+        setTimerEnabled(updatedSeconds > 0);
     };
     const OnReset = (seconds, iteration, isStopped) => {
         setDuration(seconds);
@@ -71,23 +95,23 @@ const Tabata = () => {
 
     return <Panel>
         <TabataTimerDisplay seconds={duration} iteration={iterations} state={state}></TabataTimerDisplay>
-        <TimerButtons Start={Start} Stop={Stop} Reset={Reset} FastForward={FastForward} />
-        <Panel>
-            <h3>Time On</h3>
-            <Input text="Duration" type="number" max="59" min="0" onChange={(e) => {Update('on', e.target.value, null, null, null)}} placeHolder="Duration (hour)"></Input>
-            <Input text="Duration" type="number" max="59" min="0" onChange={(e) => {Update('on', null, e.target.value, null, null)}} placeHolder="Duration (min)"></Input>
-            <Input text="Duration" type="number" max="59" min="0" onChange={(e) => {Update('on', null, null, e.target.value, null)}} placeHolder="Duration (seconds)"></Input>
-        </Panel>
-        <Panel>
-            <h3>Time Off</h3>
-            <Input text="Duration" type="number" max="59" min="0" onChange={(e) => {Update('off', e.target.value, null, null, null)}} placeHolder="Duration (hour)"></Input>
-            <Input text="Duration" type="number" max="59" min="0" onChange={(e) => {Update('off', null, e.target.value, null, null)}} placeHolder="Duration (min)"></Input>
-            <Input text="Duration" type="number" max="59" min="0" onChange={(e) => {Update('off', null, null, e.target.value, null)}} placeHolder="Duration (seconds)"></Input>
-        </Panel>
-        <Panel>
-            <h3>Rounds</h3>
-            <Input text="Rounds" type="number" max="999" min="0" onChange={(e) => {Update(null, null, null, null, e.target.value)}} placeHolder="Rounds"></Input>
-        </Panel>
+        <TimerButtons  enabled={timerEnabled} Start={Start} Stop={Stop} Reset={Reset} FastForward={FastForward} />
+        {editMode && (
+        <>
+            <Panel>
+                <h3>Time On</h3>
+                <TimeInput update={Update} state="on"></TimeInput>
+            </Panel>
+            <Panel>
+                <h3>Time Off</h3>
+                <TimeInput update={Update} state="off"></TimeInput>
+            </Panel>
+            <Panel>
+                <h3>Sets</h3>
+                <Input text="Rounds" type="number" max="999" min="0" onChange={(e) => {Update(null, null, null, null, e.target.value)}} placeHolder="Sets"></Input>
+            </Panel>
+        </>
+        )}
     </Panel>
 };
 

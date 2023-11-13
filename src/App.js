@@ -1,9 +1,12 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import styled from 'styled-components';
 
-import DocumentationView from "./views/DocumentationView";
-import TimersView from "./views/TimersView";
+import DocumentationView from './views/DocumentationView';
+import TimersView from './views/TimersView';
+import WorkoutApp from './views/WorkoutApp';
+
+import { TimerQueueProvider } from './context/TimerContext'; 
 
 const Container = styled.div`
   background: #f0f6fb;
@@ -16,10 +19,13 @@ const Nav = () => {
     <nav>
       <ul>
         <li>
-          <Link to="/">Timers</Link>
+          <Link to="/add">Add Timer</Link>
         </li>
         <li>
           <Link to="/docs">Documentation</Link>
+        </li>
+        <li>
+          <Link to="/workout">Workout</Link>
         </li>
       </ul>
     </nav>
@@ -28,15 +34,18 @@ const Nav = () => {
 
 const App = () => {
   return (
-    <Container>
-      <Router>
-        <Nav />
-        <Routes>
-          <Route path="/docs" element={<DocumentationView />} />
-          <Route path="/" element={<TimersView />} />
-        </Routes>
-      </Router>
-    </Container>
+    <TimerQueueProvider>
+      <Container>
+        <Router>
+          <Nav />
+          <Routes>
+            <Route path="/docs" element={<DocumentationView />} />
+            <Route path="/add" element={<TimersView />} />
+            <Route path="/workout" element={<WorkoutApp />} />
+          </Routes>
+        </Router>
+      </Container>
+    </TimerQueueProvider>
   );
 };
 

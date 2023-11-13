@@ -1,5 +1,4 @@
+
 .default-panel {
-    border: 1px solid gray;
-    border-radius: 5px;
-    box-shadow: 1px 2px lightgray;
+   padding-top: 20px;
 }

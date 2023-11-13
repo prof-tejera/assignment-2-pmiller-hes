@@ -5,7 +5,7 @@
   font-size: 16px;
   margin: 4px 2px;
   cursor: pointer;
-
+  width: 150px;;
   font-size: 16px;
   padding: 20px;
   font-weight: bold;
@@ -21,4 +21,15 @@
 
 .Default-button:hover {
   background-color: rgb(71, 145, 241);
+}
+
+.Default-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed; 
+}
+
+.Default-button:disabled:hover {
+  opacity: 0.5;
+  cursor: not-allowed; 
+  background-color: orangered;
 }

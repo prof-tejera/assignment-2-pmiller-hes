@@ -1,18 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { useTimerQueue } from '../context/TimerContext';
 
 import Stopwatch from "../components/timers/Stopwatch";
 import Countdown from "../components/timers/Countdown";
 import XY from "../components/timers/XY";
 import Tabata from "../components/timers/Tabata";
 
+// Styled components
 const Timers = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const Timer = styled.div`
+const TimerContainer = styled.div`
   border: 1px solid gray;
   padding: 20px;
   margin: 10px;
@@ -22,21 +24,67 @@ const Timer = styled.div`
 const TimerTitle = styled.div``;
 
 const TimersView = () => {
-  const timers = [
-    { title: "Stopwatch", C: <Stopwatch /> },
-    { title: "Countdown", C: <Countdown /> },
-    { title: "XY", C: <XY /> },
-    { title: "Tabata", C: <Tabata /> },
-  ];
+  const { addTimer } = useTimerQueue();
+
+
+  const [stopwatchSettings, setStopwatchSettings] = useState({});
+  const [countdownSettings, setCountdownSettings] = useState({});
+  const [xySettings, setXYSettings] = useState({});
+  const [tabataSettings, setTabataSettings] = useState({
+    timeOn: 0,
+    timeOff: 0,
+    sets: 0,
+  });
+
+  
+  const handleSettingsChange = (settingsUpdater, field, value) => {
+    settingsUpdater(prev => ({ ...prev, [field]: value }));
+  };
+
+
+  const handleAddTimer = (Component, settings) => {
+    const TimerComponentWithProps = <Component {...settings} />;
+    addTimer(TimerComponentWithProps);
+};
+
 
   return (
     <Timers>
-      {timers.map((timer) => (
-        <Timer key={`timer-${timer.title}`}>
-          <TimerTitle>{timer.title}</TimerTitle>
-          {timer.C}
-        </Timer>
-      ))}
+      {/* Stopwatch Timer */}
+      <TimerContainer>
+        <TimerTitle>Stopwatch</TimerTitle>
+        <Stopwatch editMode={true} {...stopwatchSettings} />
+        <button onClick={() => handleAddTimer(Stopwatch, stopwatchSettings)}>Add Stopwatch</button>
+      </TimerContainer>
+
+      {/* Countdown Timer */}
+      <TimerContainer>
+        <TimerTitle>Countdown</TimerTitle>
+        <Countdown editMode={true} {...countdownSettings} />
+        <button onClick={() => handleAddTimer(Countdown, countdownSettings)}>Add Countdown</button>
+      </TimerContainer>
+
+      {/* XY Timer */}
+      <TimerContainer>
+        <TimerTitle>XY</TimerTitle>
+        <XY editMode={true} {...xySettings} />
+        <button onClick={() => handleAddTimer(XY, xySettings)}>Add XY</button>
+      </TimerContainer>
+
+      {/* Tabata Timer */}
+      <TimerContainer>
+        <TimerTitle>Tabata</TimerTitle>
+        <Tabata
+          editMode={true}
+          timeOn={tabataSettings.timeOn}
+          timeOff={tabataSettings.timeOff}
+          sets={tabataSettings.sets}
+          onTimeOnUpdate={(value) => handleSettingsChange(setTabataSettings, 'timeOn', value)}
+          onTimeOffUpdate={(value) => handleSettingsChange(setTabataSettings, 'timeOff', value)}
+          onSetsUpdate={(value) => handleSettingsChange(setTabataSettings, 'sets', value)}
+        />
+        <button onClick={() => handleAddTimer(Tabata, tabataSettings)}>Add Tabata</button>
+      </TimerContainer>
     </Timers>
   );
 };

@@ -1,7 +1,7 @@
 import "./Input.css";
 
 const Input = ({ className, placeHolder, ...props })  => {
-  return <span><input className={'default-inputField '+ className} placeholder={placeHolder} {...props} /></span>;
+  return <input className={'default-inputField '+ className} placeholder={placeHolder} {...props} />;
 };
 
 export default Input;

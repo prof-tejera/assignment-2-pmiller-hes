@@ -6,17 +6,17 @@ import TimerButtons from "../generic/TimerButtons";
 import TimeInput from "../generic/TimeInput";
 
 const Stopwatch = ({ editMode = true, initialState, onUpdate }) => {
-    const [duration, setDuration] = useState(initialState.duration || 0);
-    const [state, setState] = useState(initialState.state || null);
-    const [timerEnabled, setTimerEnabled] = useState(initialState.timerEnabled || false);
-    const seconds = useRef(initialState.seconds || 0);
+    const [duration, setDuration] = useState(initialState?.duration || 0);
+    const [state, setState] = useState(initialState?.state || null);
+    const [timerEnabled, setTimerEnabled] = useState(initialState?.timerEnabled || false);
+    const seconds = useRef(initialState?.seconds || 0);
 
     useEffect(() => {
         if (initialState) {
-            setDuration(initialState.duration || 0);
-            setState(initialState.state || null);
-            seconds.current = initialState.seconds || 0;
-            setTimerEnabled(initialState.timerEnabled !== undefined ? initialState.timerEnabled : false);
+            setDuration(initialState?.duration || 0);
+            setState(initialState?.state || null);
+            seconds.current = initialState?.seconds || 0;
+            setTimerEnabled(initialState?.timerEnabled !== undefined ? initialState.timerEnabled : false);
         }
     }, [initialState]);
 

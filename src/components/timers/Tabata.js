@@ -18,14 +18,14 @@ const Tabata = ({ editMode = true, initialState, onUpdate }) => {
 
     useEffect(() => {
         if (initialState) {
-            setDuration(initialState.duration || 0);
-            setIterations(initialState.iterations || 0);
-            setState(initialState.state || 'on');
-            iterationState.current = initialState.iterationState || 0;
-            onOffState.current = initialState.onOffState || 'on';
-            onSeconds.current = initialState.onSeconds || 0;
-            offSeconds.current = initialState.offSeconds || 0;
-            setTimerEnabled(initialState.timerEnabled !== undefined ? initialState.timerEnabled : false);
+            setDuration(initialState?.duration || 0);
+            setIterations(initialState?.iterations || 0);
+            setState(initialState?.state || 'on');
+            iterationState.current = initialState?.iterationState || 0;
+            onOffState.current = initialState?.onOffState || 'on';
+            onSeconds.current = initialState?.onSeconds || 0;
+            offSeconds.current = initialState?.offSeconds || 0;
+            setTimerEnabled(initialState?.timerEnabled !== undefined ? initialState.timerEnabled : false);
         }
     }, [initialState]);
     

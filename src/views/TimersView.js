@@ -53,21 +53,45 @@ const TimersView = () => {
       {/* Stopwatch Timer */}
       <TimerContainer>
         <TimerTitle>Stopwatch</TimerTitle>
-        <Stopwatch editMode={true} {...stopwatchSettings} />
+        <Stopwatch         
+          editMode={true}
+          timeOn={stopwatchSettings.timeOn}
+          timeOff={stopwatchSettings.timeOff}
+          sets={stopwatchSettings.sets}
+          onTimeOnUpdate={(value) => handleSettingsChange(stopwatchSettings, 'timeOn', value)}
+          onTimeOffUpdate={(value) => handleSettingsChange(stopwatchSettings, 'timeOff', value)}
+          onSetsUpdate={(value) => handleSettingsChange(stopwatchSettings, 'sets', value)}
+          />
         <button onClick={() => handleAddTimer(Stopwatch, stopwatchSettings)}>Add Stopwatch</button>
       </TimerContainer>
 
       {/* Countdown Timer */}
       <TimerContainer>
         <TimerTitle>Countdown</TimerTitle>
-        <Countdown editMode={true} {...countdownSettings} />
+        <Countdown 
+                editMode={true}
+                timeOn={countdownSettings.timeOn}
+                timeOff={countdownSettings.timeOff}
+                sets={countdownSettings.sets}
+                onTimeOnUpdate={(value) => handleSettingsChange(countdownSettings, 'timeOn', value)}
+                onTimeOffUpdate={(value) => handleSettingsChange(countdownSettings, 'timeOff', value)}
+                onSetsUpdate={(value) => handleSettingsChange(countdownSettings, 'sets', value)}
+                 />
         <button onClick={() => handleAddTimer(Countdown, countdownSettings)}>Add Countdown</button>
       </TimerContainer>
 
       {/* XY Timer */}
       <TimerContainer>
         <TimerTitle>XY</TimerTitle>
-        <XY editMode={true} {...xySettings} />
+        <XY 
+                editMode={true}
+                timeOn={xySettings.timeOn}
+                timeOff={xySettings.timeOff}
+                sets={xySettings.sets}
+                onTimeOnUpdate={(value) => handleSettingsChange(xySettings, 'timeOn', value)}
+                onTimeOffUpdate={(value) => handleSettingsChange(xySettings, 'timeOff', value)}
+                onSetsUpdate={(value) => handleSettingsChange(xySettings, 'sets', value)}
+                 />
         <button onClick={() => handleAddTimer(XY, xySettings)}>Add XY</button>
       </TimerContainer>
 

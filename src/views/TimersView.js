@@ -27,9 +27,6 @@ const TimersView = () => {
   const { addTimer } = useTimerQueue();
 
 
-  const [stopwatchSettings, setStopwatchSettings] = useState({});
-  const [countdownSettings, setCountdownSettings] = useState({});
-  const [xySettings, setXYSettings] = useState({});
   const [tabataSettings, setTabataSettings] = useState({
     timeOn: 0,
     timeOff: 0,

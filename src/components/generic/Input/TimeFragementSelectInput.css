@@ -1,0 +1,11 @@
+.default-TimeFragmentSelectInput {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 25%;
+    box-sizing: border-box;
+    border: none;
+    background-color: transparent;
+}

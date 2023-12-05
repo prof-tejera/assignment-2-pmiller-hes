@@ -14,9 +14,9 @@ const WorkoutApp = () => {
             return <p>No active timer.</p>;
         }
 
-        const { timerType, timerState } = currentTimer;
+        const { timer, timerState } = currentTimer;
 
-        switch (timerType) {
+        switch (timer.timerType) {
             case 'Tabata':
                 return <Tabata initialState={timerState} />;
             case 'Stopwatch':

@@ -14,17 +14,17 @@ const WorkoutApp = () => {
             return <p>No active timer.</p>;
         }
 
-        const { timer, timerState } = currentTimer;
+        const { timerType, timerState } = currentTimer;
 
-        switch (timer.timerType) {
+        switch (timerType) {
             case 'Tabata':
-                return <Tabata initialState={timerState} />;
+                return <Tabata initialState={timerState} editMode={false}/>;
             case 'Stopwatch':
-                return <Stopwatch initialState={timerState} />;
+                return <Stopwatch initialState={timerState} editMode={false} />;
             case 'Countdown':
-                return <Countdown initialState={timerState} />;
+                return <Countdown initialState={timerState} editMode={false} />;
             case 'XY':
-                return <XY initialState={timerState} />;
+                return <XY initialState={timerState} editMode={false}/>;
             default:
                 return <p>Unknown timer type.</p>;
         }
@@ -34,7 +34,7 @@ const WorkoutApp = () => {
         <div>
             <h1>Workout App</h1>
             {renderCurrentTimer()}
-            <Button onClick={nextTimer}>Next Timer</Button>
+            <Button onClick={nextTimer} text='Next Timer'></Button>
         </div>
     );
 };

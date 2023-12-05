@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useTimerQueue } from '../context/TimerContext';
-
+import Button from '../components/generic/button/Button';
 import Stopwatch from "../components/timers/Stopwatch";
 import Countdown from "../components/timers/Countdown";
 import XY from "../components/timers/XY";
@@ -26,26 +26,12 @@ const TimerTitle = styled.div``;
 const TimersView = () => {
   const { addTimer } = useTimerQueue();
 
-
-  const [stopwatchSettings, setStopwatchSettings] = useState({});
-  const [countdownSettings, setCountdownSettings] = useState({});
-  const [xySettings, setXYSettings] = useState({});
-  const [tabataSettings, setTabataSettings] = useState({
-    timeOn: 0,
-    timeOff: 0,
-    sets: 0,
-  });
-
+  const [stopwatchState, setStopwatchState] = useState({});
+  const [countdownState, setCountdownState] = useState({});
+  const [xyState, setXYState] = useState({});
+  const [tabataState, setTabataState] = useState({});
   
-  const handleSettingsChange = (settingsUpdater, field, value) => {
-    settingsUpdater(prev => ({ ...prev, [field]: value }));
-  };
 
-
-  const handleAddTimer = (Component, settings, timerType) => {
-    const timerWithProps = { component: <Component {...settings} />, timerType: timerType };
-    addTimer(timerWithProps);
-  };
 
 
   return (
@@ -53,61 +39,41 @@ const TimersView = () => {
       {/* Stopwatch Timer */}
       <TimerContainer>
         <TimerTitle>Stopwatch</TimerTitle>
-        <Stopwatch         
-          editMode={true}
-          timeOn={stopwatchSettings.timeOn}
-          timeOff={stopwatchSettings.timeOff}
-          sets={stopwatchSettings.sets}
-          onTimeOnUpdate={(value) => handleSettingsChange(setStopwatchSettings, 'timeOn', value)}
-          onTimeOffUpdate={(value) => handleSettingsChange(setStopwatchSettings, 'timeOff', value)}
-          onSetsUpdate={(value) => handleSettingsChange(setStopwatchSettings, 'sets', value)}
+        <Stopwatch      
+            editMode={true}   
+            onUpdate={(state) => setStopwatchState(state)}
           />
-        <button onClick={() => handleAddTimer(Stopwatch, stopwatchSettings, 'Stopwatch')}>Add Stopwatch</button>
-      </TimerContainer>
+          <Button onClick={() => addTimer('Stopwatch', stopwatchState)} text='Add Timer to Workout'></Button>
+        </TimerContainer>
 
       {/* Countdown Timer */}
       <TimerContainer>
         <TimerTitle>Countdown</TimerTitle>
         <Countdown 
                 editMode={true}
-                timeOn={countdownSettings.timeOn}
-                timeOff={countdownSettings.timeOff}
-                sets={countdownSettings.sets}
-                onTimeOnUpdate={(value) => handleSettingsChange(setCountdownSettings, 'timeOn', value)}
-                onTimeOffUpdate={(value) => handleSettingsChange(setCountdownSettings, 'timeOff', value)}
-                onSetsUpdate={(value) => handleSettingsChange(setCountdownSettings, 'sets', value)}
-                 />
-        <button onClick={() => handleAddTimer(Countdown, countdownSettings, 'Countdown')}>Add Countdown</button>
+                onUpdate={(state) => setCountdownState(state)}
+                />
+              <Button onClick={() => addTimer('Countdown', countdownState)} text='Add Timer to Workout'></Button>
       </TimerContainer>
 
       {/* XY Timer */}
       <TimerContainer>
         <TimerTitle>XY</TimerTitle>
         <XY 
-                editMode={true}
-                timeOn={xySettings.timeOn}
-                timeOff={xySettings.timeOff}
-                sets={xySettings.sets}
-                onTimeOnUpdate={(value) => handleSettingsChange(setXYSettings, 'timeOn', value)}
-                onTimeOffUpdate={(value) => handleSettingsChange(setXYSettings, 'timeOff', value)}
-                onSetsUpdate={(value) => handleSettingsChange(setXYSettings, 'sets', value)}
-                 />
-        <button onClick={() => handleAddTimer(XY, xySettings, 'XY')}>Add XY</button>
+             editMode={true}
+             onUpdate={(state) => setXYState(state)}
+             />
+           <Button onClick={() => addTimer('XY', xyState)} text='Add Timer to Workout'></Button>
       </TimerContainer>
 
       {/* Tabata Timer */}
       <TimerContainer>
         <TimerTitle>Tabata</TimerTitle>
         <Tabata
-          editMode={true}
-          timeOn={tabataSettings.timeOn}
-          timeOff={tabataSettings.timeOff}
-          sets={tabataSettings.sets}
-          onTimeOnUpdate={(value) => handleSettingsChange(setTabataSettings, 'timeOn', value)}
-          onTimeOffUpdate={(value) => handleSettingsChange(setTabataSettings, 'timeOff', value)}
-          onSetsUpdate={(value) => handleSettingsChange(setTabataSettings, 'sets', value)}
-        />
-        <button onClick={() => handleAddTimer(Tabata, tabataSettings, 'Tabata')}>Add Tabata</button>
+           editMode={true}
+           onUpdate={(state) => setTabataState(state)}
+           />
+         <Button onClick={() => addTimer('Tabata', tabataState)} text='Add Timer to Workout'></Button>
       </TimerContainer>
     </Timers>
   );

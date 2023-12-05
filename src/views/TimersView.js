@@ -42,10 +42,10 @@ const TimersView = () => {
   };
 
 
-  const handleAddTimer = (Component, settings) => {
-    const TimerComponentWithProps = <Component {...settings} />;
-    addTimer(TimerComponentWithProps);
-};
+  const handleAddTimer = (Component, settings, timerType) => {
+    const timerWithProps = { component: <Component {...settings} />, timerType: timerType };
+    addTimer(timerWithProps);
+  };
 
 
   return (
@@ -62,7 +62,7 @@ const TimersView = () => {
           onTimeOffUpdate={(value) => handleSettingsChange(setStopwatchSettings, 'timeOff', value)}
           onSetsUpdate={(value) => handleSettingsChange(setStopwatchSettings, 'sets', value)}
           />
-        <button onClick={() => handleAddTimer(Stopwatch, stopwatchSettings)}>Add Stopwatch</button>
+        <button onClick={() => handleAddTimer(Stopwatch, stopwatchSettings, 'Stopwatch')}>Add Stopwatch</button>
       </TimerContainer>
 
       {/* Countdown Timer */}
@@ -77,7 +77,7 @@ const TimersView = () => {
                 onTimeOffUpdate={(value) => handleSettingsChange(setCountdownSettings, 'timeOff', value)}
                 onSetsUpdate={(value) => handleSettingsChange(setCountdownSettings, 'sets', value)}
                  />
-        <button onClick={() => handleAddTimer(Countdown, countdownSettings)}>Add Countdown</button>
+        <button onClick={() => handleAddTimer(Countdown, countdownSettings, 'Countdown')}>Add Countdown</button>
       </TimerContainer>
 
       {/* XY Timer */}
@@ -92,7 +92,7 @@ const TimersView = () => {
                 onTimeOffUpdate={(value) => handleSettingsChange(setXYSettings, 'timeOff', value)}
                 onSetsUpdate={(value) => handleSettingsChange(setXYSettings, 'sets', value)}
                  />
-        <button onClick={() => handleAddTimer(XY, xySettings)}>Add XY</button>
+        <button onClick={() => handleAddTimer(XY, xySettings, 'XY')}>Add XY</button>
       </TimerContainer>
 
       {/* Tabata Timer */}
@@ -107,7 +107,7 @@ const TimersView = () => {
           onTimeOffUpdate={(value) => handleSettingsChange(setTabataSettings, 'timeOff', value)}
           onSetsUpdate={(value) => handleSettingsChange(setTabataSettings, 'sets', value)}
         />
-        <button onClick={() => handleAddTimer(Tabata, tabataSettings)}>Add Tabata</button>
+        <button onClick={() => handleAddTimer(Tabata, tabataSettings, 'Tabata')}>Add Tabata</button>
       </TimerContainer>
     </Timers>
   );
